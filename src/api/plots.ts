@@ -1,0 +1,582 @@
+/**
+ * Plot API types - Request/Response types for /api/v1/plots
+ */
+
+import { PaginationMeta, SearchParams } from './common';
+import {
+  PhysicalPlotStatus,
+  PaymentStatus,
+  ContractStatus,
+  ContractRole,
+  Gender,
+  AddressType,
+  DmSetting,
+  BillingType,
+  AccountType,
+} from '../enums';
+
+/**
+ * Plot list item (GET /plots response item)
+ * This is a flattened view for list display
+ */
+export interface PlotListItem {
+  id: string;
+  contractAreaSqm: number;
+  locationDescription: string | null;
+
+  // Physical plot info (flattened)
+  plotNumber: string;
+  areaName: string;
+  physicalPlotAreaSqm: number;
+  physicalPlotStatus: PhysicalPlotStatus;
+
+  // Sale contract info
+  contractDate: string;
+  price: number;
+  paymentStatus: PaymentStatus;
+
+  // Primary customer (backward compatibility)
+  customerName: string | null;
+  customerNameKana: string | null;
+  customerPhoneNumber: string | null;
+  customerAddress: string | null;
+  customerRole: ContractRole | null;
+
+  // All roles (new approach)
+  roles: Array<{
+    role: ContractRole;
+    customer: {
+      id: string;
+      name: string;
+    };
+  }>;
+
+  // Billing info
+  nextBillingDate: string | null;
+  managementFee: string | null;
+
+  // Metadata
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Plot list response
+ */
+export interface PlotListResponse {
+  data: PlotListItem[];
+  pagination: PaginationMeta;
+}
+
+/**
+ * Plot list search parameters
+ */
+export interface PlotSearchParams extends SearchParams {
+  areaName?: string;
+  status?: PhysicalPlotStatus;
+  paymentStatus?: PaymentStatus;
+}
+
+/**
+ * Plot detail response (GET /plots/:id)
+ */
+export interface PlotDetailResponse {
+  id: string;
+  contractAreaSqm: number;
+  locationDescription: string | null;
+  createdAt: string;
+  updatedAt: string;
+
+  // Physical plot
+  physicalPlot: {
+    id: string;
+    plotNumber: string;
+    areaName: string;
+    areaSqm: number;
+    status: PhysicalPlotStatus;
+    notes: string | null;
+  };
+
+  // Sale contract info
+  contractDate: string;
+  price: number;
+  contractStatus: ContractStatus;
+  paymentStatus: PaymentStatus;
+  reservationDate: string | null;
+  acceptanceNumber: string | null;
+  permitDate: string | null;
+  permitNumber: string | null;
+  startDate: string | null;
+  contractNotes: string | null;
+
+  // Usage fee
+  usageFee: {
+    calculationType: string | null;
+    taxType: string | null;
+    billingType: string | null;
+    billingYears: string | null;
+    usageFee: string | null;
+    area: string | null;
+    unitPrice: string | null;
+    paymentMethod: string | null;
+  } | null;
+
+  // Management fee
+  managementFee: {
+    calculationType: string | null;
+    taxType: string | null;
+    billingType: string | null;
+    billingYears: string | null;
+    area: string | null;
+    billingMonth: string | null;
+    managementFee: string | null;
+    unitPrice: string | null;
+    lastBillingMonth: string | null;
+    paymentMethod: string | null;
+  } | null;
+
+  // Buried persons
+  buriedPersons: Array<{
+    id: string;
+    name: string;
+    nameKana: string | null;
+    relationship: string | null;
+    deathDate: string | null;
+    age: number | null;
+    gender: Gender | null;
+    burialDate: string | null;
+    notes: string | null;
+  }>;
+
+  // Family contacts
+  familyContacts: Array<{
+    id: string;
+    name: string;
+    birthDate: string | null;
+    relationship: string;
+    postalCode: string | null;
+    address: string;
+    phoneNumber: string;
+    faxNumber: string | null;
+    email: string | null;
+    registeredAddress: string | null;
+    mailingType: AddressType | null;
+    notes: string | null;
+  }>;
+
+  // Gravestone info
+  gravestoneInfo: {
+    gravestoneBase: string | null;
+    enclosurePosition: string | null;
+    gravestoneDealer: string | null;
+    gravestoneType: string | null;
+    surroundingArea: string | null;
+    establishmentDeadline: string | null;
+    establishmentDate: string | null;
+  } | null;
+
+  // Construction infos
+  constructionInfos: Array<{
+    id: string;
+    constructionType: string | null;
+    startDate: string | null;
+    completionDate: string | null;
+    contractor: string | null;
+    supervisor: string | null;
+    progress: string | null;
+    workItem1: string | null;
+    workDate1: string | null;
+    workAmount1: number | null;
+    workStatus1: string | null;
+    workItem2: string | null;
+    workDate2: string | null;
+    workAmount2: number | null;
+    workStatus2: string | null;
+    permitNumber: string | null;
+    applicationDate: string | null;
+    permitDate: string | null;
+    permitStatus: string | null;
+    paymentType1: string | null;
+    paymentAmount1: number | null;
+    paymentDate1: string | null;
+    paymentStatus1: string | null;
+    paymentType2: string | null;
+    paymentAmount2: number | null;
+    paymentScheduledDate2: string | null;
+    paymentStatus2: string | null;
+    notes: string | null;
+  }>;
+
+  // Collective burial
+  collectiveBurial: {
+    id: string;
+    burialCapacity: number;
+    currentBurialCount: number;
+    capacityReachedDate: string | null;
+    validityPeriodYears: number;
+    billingScheduledDate: string | null;
+    billingStatus: string;
+    billingAmount: number | null;
+    notes: string | null;
+  } | null;
+
+  // All roles and customers
+  roles: Array<{
+    id: string;
+    role: ContractRole;
+    roleStartDate: string | null;
+    roleEndDate: string | null;
+    notes: string | null;
+    customer: {
+      id: string;
+      name: string;
+      nameKana: string | null;
+      gender: Gender | null;
+      birthDate: string | null;
+      phoneNumber: string | null;
+      faxNumber: string | null;
+      email: string | null;
+      postalCode: string | null;
+      address: string | null;
+      registeredAddress: string | null;
+      notes: string | null;
+      workInfo: {
+        companyName: string | null;
+        companyNameKana: string | null;
+        workPostalCode: string | null;
+        workAddress: string | null;
+        workPhoneNumber: string | null;
+        dmSetting: DmSetting | null;
+        addressType: AddressType | null;
+        notes: string | null;
+      } | null;
+      billingInfo: {
+        billingType: BillingType | null;
+        bankName: string | null;
+        branchName: string | null;
+        accountType: AccountType | null;
+        accountNumber: string | null;
+        accountHolder: string | null;
+      } | null;
+    };
+  }>;
+
+  // Optional: Histories
+  histories?: Array<{
+    id: string;
+    actionType: string;
+    changedFields: string[] | null;
+    changedBy: string | null;
+    createdAt: string;
+  }>;
+}
+
+/**
+ * Create plot request body (POST /plots)
+ */
+export interface CreatePlotRequest {
+  physicalPlot: {
+    plotNumber: string;
+    areaName: string;
+    areaSqm?: number;
+    notes?: string | null;
+  };
+
+  contractPlot: {
+    contractAreaSqm: number;
+    locationDescription?: string | null;
+  };
+
+  saleContract: {
+    contractDate: string;
+    price: number;
+    paymentStatus?: PaymentStatus;
+    reservationDate?: string | null;
+    acceptanceNumber?: string | null;
+    permitDate?: string | null;
+    permitNumber?: string | null;
+    startDate?: string | null;
+    notes?: string | null;
+  };
+
+  customer: {
+    name: string;
+    nameKana: string;
+    birthDate?: string | null;
+    gender?: Gender | null;
+    postalCode: string;
+    address: string;
+    registeredAddress?: string | null;
+    phoneNumber: string;
+    faxNumber?: string | null;
+    email?: string | null;
+    notes?: string | null;
+    role?: ContractRole;
+  };
+
+  workInfo?: {
+    companyName: string;
+    companyNameKana: string;
+    workAddress: string;
+    workPostalCode: string;
+    workPhoneNumber: string;
+    dmSetting?: DmSetting;
+    addressType?: AddressType;
+    notes?: string | null;
+  };
+
+  billingInfo?: {
+    billingType: BillingType;
+    bankName: string;
+    branchName: string;
+    accountType: AccountType;
+    accountNumber: string;
+    accountHolder: string;
+  };
+
+  usageFee?: {
+    calculationType?: string | null;
+    taxType?: string | null;
+    billingType?: string | null;
+    billingYears?: string | null;
+    usageFee?: string | null;
+    area?: string | null;
+    unitPrice?: string | null;
+    paymentMethod?: string | null;
+  };
+
+  managementFee?: {
+    calculationType?: string | null;
+    taxType?: string | null;
+    billingType?: string | null;
+    billingYears?: string | null;
+    area?: string | null;
+    billingMonth?: string | null;
+    managementFee?: string | null;
+    unitPrice?: string | null;
+    lastBillingMonth?: string | null;
+    paymentMethod?: string | null;
+  };
+
+  gravestoneInfo?: {
+    gravestoneBase?: string | null;
+    enclosurePosition?: string | null;
+    gravestoneDealer?: string | null;
+    gravestoneType?: string | null;
+    surroundingArea?: string | null;
+    establishmentDeadline?: string | null;
+    establishmentDate?: string | null;
+  };
+
+  familyContacts?: Array<{
+    emergencyContactFlag?: boolean;
+    name: string;
+    birthDate?: string | null;
+    relationship: string;
+    postalCode?: string | null;
+    address: string;
+    phoneNumber: string;
+    faxNumber?: string | null;
+    email?: string | null;
+    registeredAddress?: string | null;
+    mailingType?: AddressType | null;
+    notes?: string | null;
+  }>;
+
+  buriedPersons?: Array<{
+    name: string;
+    nameKana?: string | null;
+    relationship?: string | null;
+    deathDate?: string | null;
+    age?: number | null;
+    gender?: Gender | null;
+    burialDate?: string | null;
+    notes?: string | null;
+  }>;
+
+  collectiveBurial?: {
+    burialCapacity: number;
+    validityPeriodYears: number;
+    billingAmount?: number | null;
+    notes?: string | null;
+  };
+}
+
+/**
+ * Update plot request body (PUT /plots/:id)
+ * All fields are optional for partial updates
+ */
+export interface UpdatePlotRequest {
+  physicalPlot?: {
+    notes?: string | null;
+  };
+
+  contractPlot?: {
+    contractAreaSqm?: number;
+    locationDescription?: string | null;
+  };
+
+  saleContract?: {
+    contractDate?: string;
+    price?: number;
+    paymentStatus?: PaymentStatus;
+    reservationDate?: string | null;
+    acceptanceNumber?: string | null;
+    permitDate?: string | null;
+    permitNumber?: string | null;
+    startDate?: string | null;
+    notes?: string | null;
+  };
+
+  customer?: {
+    name?: string;
+    nameKana?: string;
+    birthDate?: string | null;
+    gender?: Gender | null;
+    postalCode?: string;
+    address?: string;
+    registeredAddress?: string | null;
+    phoneNumber?: string;
+    faxNumber?: string | null;
+    email?: string | null;
+    notes?: string | null;
+  };
+
+  workInfo?: {
+    companyName?: string;
+    companyNameKana?: string;
+    workAddress?: string;
+    workPostalCode?: string;
+    workPhoneNumber?: string;
+    dmSetting?: DmSetting;
+    addressType?: AddressType;
+    notes?: string | null;
+  } | null;
+
+  billingInfo?: {
+    billingType?: BillingType;
+    bankName?: string;
+    branchName?: string;
+    accountType?: AccountType;
+    accountNumber?: string;
+    accountHolder?: string;
+  } | null;
+
+  usageFee?: {
+    calculationType?: string | null;
+    taxType?: string | null;
+    billingType?: string | null;
+    billingYears?: string | null;
+    usageFee?: string | null;
+    area?: string | null;
+    unitPrice?: string | null;
+    paymentMethod?: string | null;
+  } | null;
+
+  managementFee?: {
+    calculationType?: string | null;
+    taxType?: string | null;
+    billingType?: string | null;
+    billingYears?: string | null;
+    area?: string | null;
+    billingMonth?: string | null;
+    managementFee?: string | null;
+    unitPrice?: string | null;
+    lastBillingMonth?: string | null;
+    paymentMethod?: string | null;
+  } | null;
+
+  gravestoneInfo?: {
+    gravestoneBase?: string | null;
+    enclosurePosition?: string | null;
+    gravestoneDealer?: string | null;
+    gravestoneType?: string | null;
+    surroundingArea?: string | null;
+    establishmentDeadline?: string | null;
+    establishmentDate?: string | null;
+  } | null;
+
+  familyContacts?: Array<{
+    id?: string;
+    emergencyContactFlag?: boolean;
+    name: string;
+    birthDate?: string | null;
+    relationship: string;
+    postalCode?: string | null;
+    address: string;
+    phoneNumber: string;
+    faxNumber?: string | null;
+    email?: string | null;
+    registeredAddress?: string | null;
+    mailingType?: AddressType | null;
+    notes?: string | null;
+  }>;
+
+  buriedPersons?: Array<{
+    id?: string;
+    name: string;
+    nameKana?: string | null;
+    relationship?: string | null;
+    deathDate?: string | null;
+    age?: number | null;
+    gender?: Gender | null;
+    burialDate?: string | null;
+    notes?: string | null;
+  }>;
+
+  collectiveBurial?: {
+    burialCapacity?: number;
+    validityPeriodYears?: number;
+    billingStatus?: string;
+    billingAmount?: number | null;
+    notes?: string | null;
+  } | null;
+}
+
+/**
+ * Create plot response (POST /plots)
+ */
+export interface CreatePlotResponse {
+  id: string;
+  contractAreaSqm: number;
+  locationDescription: string | null;
+  contractDate: string;
+  price: number;
+  paymentStatus: PaymentStatus;
+  reservationDate: string | null;
+  acceptanceNumber: string | null;
+  permitDate: string | null;
+  startDate: string | null;
+  notes: string | null;
+  physicalPlot: {
+    id: string;
+    plotNumber: string;
+    areaName: string;
+    areaSqm: number;
+    status: PhysicalPlotStatus;
+  };
+  primaryCustomer: {
+    id: string;
+    name: string;
+    nameKana: string;
+    phoneNumber: string;
+    address: string;
+    role: ContractRole;
+  } | null;
+  roles: Array<{
+    id: string;
+    role: ContractRole;
+    roleStartDate: string | null;
+    roleEndDate: string | null;
+    notes: string | null;
+    customer: {
+      id: string;
+      name: string;
+      nameKana: string;
+      phoneNumber: string;
+      address: string;
+    };
+  }>;
+  createdAt: string;
+  updatedAt: string;
+}
