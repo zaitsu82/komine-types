@@ -104,6 +104,8 @@ export interface PlotDetailResponse {
   paymentStatus: PaymentStatus;
   reservationDate: string | null;
   acceptanceNumber: string | null;
+  acceptanceDate: string | null;
+  staffInCharge: string | null;
   permitDate: string | null;
   permitNumber: string | null;
   startDate: string | null;
@@ -141,10 +143,14 @@ export interface PlotDetailResponse {
     name: string;
     nameKana: string | null;
     relationship: string | null;
+    birthDate: string | null;
     deathDate: string | null;
     age: number | null;
     gender: Gender | null;
     burialDate: string | null;
+    posthumousName: string | null;
+    reportDate: string | null;
+    religion: string | null;
     notes: string | null;
   }>;
 
@@ -152,15 +158,22 @@ export interface PlotDetailResponse {
   familyContacts: Array<{
     id: string;
     name: string;
+    nameKana: string | null;
     birthDate: string | null;
     relationship: string;
     postalCode: string | null;
     address: string;
     phoneNumber: string;
+    phoneNumber2: string | null;
     faxNumber: string | null;
     email: string | null;
     registeredAddress: string | null;
     mailingType: AddressType | null;
+    workCompanyName: string | null;
+    workCompanyNameKana: string | null;
+    workAddress: string | null;
+    workPhoneNumber: string | null;
+    contactMethod: string | null;
     notes: string | null;
   }>;
 
@@ -171,6 +184,7 @@ export interface PlotDetailResponse {
     gravestoneDealer: string | null;
     gravestoneType: string | null;
     surroundingArea: string | null;
+    gravestoneCost: number | null;
     establishmentDeadline: string | null;
     establishmentDate: string | null;
   } | null;
@@ -204,6 +218,8 @@ export interface PlotDetailResponse {
     paymentAmount2: number | null;
     paymentScheduledDate2: string | null;
     paymentStatus2: string | null;
+    scheduledEndDate: string | null;
+    constructionContent: string | null;
     notes: string | null;
   }>;
 
@@ -238,6 +254,7 @@ export interface PlotDetailResponse {
       email: string | null;
       postalCode: string | null;
       address: string | null;
+      addressLine2: string | null;
       registeredAddress: string | null;
       notes: string | null;
       workInfo: {
@@ -293,6 +310,8 @@ export interface CreatePlotRequest {
     paymentStatus?: PaymentStatus;
     reservationDate?: string | null;
     acceptanceNumber?: string | null;
+    acceptanceDate?: string | null;
+    staffInCharge?: string | null;
     permitDate?: string | null;
     permitNumber?: string | null;
     startDate?: string | null;
@@ -306,6 +325,7 @@ export interface CreatePlotRequest {
     gender?: Gender | null;
     postalCode: string;
     address: string;
+    addressLine2?: string | null;
     registeredAddress?: string | null;
     phoneNumber: string;
     faxNumber?: string | null;
@@ -364,6 +384,7 @@ export interface CreatePlotRequest {
     gravestoneDealer?: string | null;
     gravestoneType?: string | null;
     surroundingArea?: string | null;
+    gravestoneCost?: number | null;
     establishmentDeadline?: string | null;
     establishmentDate?: string | null;
   };
@@ -371,15 +392,22 @@ export interface CreatePlotRequest {
   familyContacts?: Array<{
     emergencyContactFlag?: boolean;
     name: string;
+    nameKana?: string | null;
     birthDate?: string | null;
     relationship: string;
     postalCode?: string | null;
     address: string;
     phoneNumber: string;
+    phoneNumber2?: string | null;
     faxNumber?: string | null;
     email?: string | null;
     registeredAddress?: string | null;
     mailingType?: AddressType | null;
+    workCompanyName?: string | null;
+    workCompanyNameKana?: string | null;
+    workAddress?: string | null;
+    workPhoneNumber?: string | null;
+    contactMethod?: string | null;
     notes?: string | null;
   }>;
 
@@ -387,10 +415,14 @@ export interface CreatePlotRequest {
     name: string;
     nameKana?: string | null;
     relationship?: string | null;
+    birthDate?: string | null;
     deathDate?: string | null;
     age?: number | null;
     gender?: Gender | null;
     burialDate?: string | null;
+    posthumousName?: string | null;
+    reportDate?: string | null;
+    religion?: string | null;
     notes?: string | null;
   }>;
 
@@ -422,6 +454,8 @@ export interface UpdatePlotRequest {
     paymentStatus?: PaymentStatus;
     reservationDate?: string | null;
     acceptanceNumber?: string | null;
+    acceptanceDate?: string | null;
+    staffInCharge?: string | null;
     permitDate?: string | null;
     permitNumber?: string | null;
     startDate?: string | null;
@@ -435,6 +469,7 @@ export interface UpdatePlotRequest {
     gender?: Gender | null;
     postalCode?: string;
     address?: string;
+    addressLine2?: string | null;
     registeredAddress?: string | null;
     phoneNumber?: string;
     faxNumber?: string | null;
@@ -492,6 +527,7 @@ export interface UpdatePlotRequest {
     gravestoneDealer?: string | null;
     gravestoneType?: string | null;
     surroundingArea?: string | null;
+    gravestoneCost?: number | null;
     establishmentDeadline?: string | null;
     establishmentDate?: string | null;
   } | null;
@@ -500,15 +536,22 @@ export interface UpdatePlotRequest {
     id?: string;
     emergencyContactFlag?: boolean;
     name: string;
+    nameKana?: string | null;
     birthDate?: string | null;
     relationship: string;
     postalCode?: string | null;
     address: string;
     phoneNumber: string;
+    phoneNumber2?: string | null;
     faxNumber?: string | null;
     email?: string | null;
     registeredAddress?: string | null;
     mailingType?: AddressType | null;
+    workCompanyName?: string | null;
+    workCompanyNameKana?: string | null;
+    workAddress?: string | null;
+    workPhoneNumber?: string | null;
+    contactMethod?: string | null;
     notes?: string | null;
   }>;
 
@@ -517,10 +560,14 @@ export interface UpdatePlotRequest {
     name: string;
     nameKana?: string | null;
     relationship?: string | null;
+    birthDate?: string | null;
     deathDate?: string | null;
     age?: number | null;
     gender?: Gender | null;
     burialDate?: string | null;
+    posthumousName?: string | null;
+    reportDate?: string | null;
+    religion?: string | null;
     notes?: string | null;
   }>;
 

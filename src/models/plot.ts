@@ -42,6 +42,8 @@ export interface ContractPlot {
   paymentStatus: PaymentStatus;
   reservationDate: string | null;
   acceptanceNumber: string | null;
+  acceptanceDate: string | null;  // 受付日
+  staffInCharge: string | null;  // 担当者
   permitDate: string | null;
   permitNumber: string | null;
   startDate: string | null;
@@ -129,6 +131,7 @@ export interface GravestoneInfo {
   gravestoneDealer: string | null;
   gravestoneType: string | null;
   surroundingArea: string | null;
+  gravestoneCost: number | null;  // 墓石代（円単位）
   establishmentDeadline: string | null;
   establishmentDate: string | null;
 }
@@ -173,6 +176,10 @@ export interface ConstructionInfo {
   paymentScheduledDate2: string | null;
   paymentStatus2: string | null;
 
+  // Additional fields
+  scheduledEndDate: string | null;  // 終了予定日
+  constructionContent: string | null;  // 工事内容
+
   notes: string | null;
 }
 
@@ -216,6 +223,8 @@ export interface ContractPlotInput {
   paymentStatus?: PaymentStatus;
   reservationDate?: string | null;
   acceptanceNumber?: string | null;
+  acceptanceDate?: string | null;
+  staffInCharge?: string | null;
   permitDate?: string | null;
   permitNumber?: string | null;
   startDate?: string | null;
@@ -252,6 +261,7 @@ export interface GravestoneInfoInput {
   gravestoneDealer?: string | null;
   gravestoneType?: string | null;
   surroundingArea?: string | null;
+  gravestoneCost?: number | null;
   establishmentDeadline?: string | null;
   establishmentDate?: string | null;
 }

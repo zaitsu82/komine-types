@@ -16,6 +16,7 @@ export interface Customer {
   gender: Gender | null;
   postalCode: string;
   address: string;
+  addressLine2: string | null;  // 住所2（2行目）
   registeredAddress: string | null;
   phoneNumber: string;
   faxNumber: string | null;
@@ -71,15 +72,22 @@ export interface FamilyContact {
   customerId: string | null;
   emergencyContactFlag: boolean;
   name: string;
+  nameKana: string | null;  // 読み（かな）
   birthDate: string | null;  // ISO date string
   relationship: string;
   postalCode: string | null;
   address: string;
   phoneNumber: string;
+  phoneNumber2: string | null;  // 電話番号2
   faxNumber: string | null;
   email: string | null;
   registeredAddress: string | null;
   mailingType: AddressType | null;
+  workCompanyName: string | null;  // 勤務先名称
+  workCompanyNameKana: string | null;  // 勤務先かな
+  workAddress: string | null;  // 勤務先住所
+  workPhoneNumber: string | null;  // 勤務先電話番号
+  contactMethod: string | null;  // 連絡区分
   notes: string | null;
 }
 
@@ -93,10 +101,14 @@ export interface BuriedPerson {
   name: string;
   nameKana: string | null;
   relationship: string | null;
+  birthDate: string | null;  // 生年月日
   deathDate: string | null;  // ISO date string
   age: number | null;
   gender: Gender | null;
   burialDate: string | null;  // ISO date string
+  posthumousName: string | null;  // 戒名
+  reportDate: string | null;  // 届出日
+  religion: string | null;  // 宗派
   notes: string | null;
 }
 
@@ -110,6 +122,7 @@ export interface CustomerInput {
   gender?: Gender | null;
   postalCode: string;
   address: string;
+  addressLine2?: string | null;
   registeredAddress?: string | null;
   phoneNumber: string;
   faxNumber?: string | null;
@@ -140,15 +153,22 @@ export interface BillingInfoInput {
 export interface FamilyContactInput {
   emergencyContactFlag?: boolean;
   name: string;
+  nameKana?: string | null;
   birthDate?: string | null;
   relationship: string;
   postalCode?: string | null;
   address: string;
   phoneNumber: string;
+  phoneNumber2?: string | null;
   faxNumber?: string | null;
   email?: string | null;
   registeredAddress?: string | null;
   mailingType?: AddressType | null;
+  workCompanyName?: string | null;
+  workCompanyNameKana?: string | null;
+  workAddress?: string | null;
+  workPhoneNumber?: string | null;
+  contactMethod?: string | null;
   notes?: string | null;
 }
 
@@ -156,9 +176,13 @@ export interface BuriedPersonInput {
   name: string;
   nameKana?: string | null;
   relationship?: string | null;
+  birthDate?: string | null;
   deathDate?: string | null;
   age?: number | null;
   gender?: Gender | null;
   burialDate?: string | null;
+  posthumousName?: string | null;
+  reportDate?: string | null;
+  religion?: string | null;
   notes?: string | null;
 }
