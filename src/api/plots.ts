@@ -284,6 +284,7 @@ export interface PlotDetailResponse {
     actionType: string;
     changedFields: string[] | null;
     changedBy: string | null;
+    changeReason: string | null;
     createdAt: string;
   }>;
 }
