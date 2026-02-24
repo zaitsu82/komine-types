@@ -54,6 +54,7 @@ export interface PlotListItem {
   // Billing info
   nextBillingDate: string | null;
   managementFee: string | null;
+  uncollectedAmount: number;
 
   // Metadata
   createdAt: string;
@@ -109,6 +110,7 @@ export interface PlotDetailResponse {
   permitDate: string | null;
   permitNumber: string | null;
   startDate: string | null;
+  uncollectedAmount: number;
   contractNotes: string | null;
 
   // Usage fee
