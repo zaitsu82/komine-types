@@ -296,6 +296,7 @@ export interface PlotDetailResponse {
  */
 export interface CreatePlotRequest {
   physicalPlot: {
+    id?: string;
     plotNumber: string;
     areaName: string;
     areaSqm?: number;
@@ -311,6 +312,7 @@ export interface CreatePlotRequest {
     contractDate: string;
     price: number;
     paymentStatus?: PaymentStatus;
+    customerRole?: string;
     reservationDate?: string | null;
     acceptanceNumber?: string | null;
     acceptanceDate?: string | null;
@@ -318,7 +320,15 @@ export interface CreatePlotRequest {
     permitDate?: string | null;
     permitNumber?: string | null;
     startDate?: string | null;
+    uncollectedAmount?: number | null;
     notes?: string | null;
+    roles?: Array<{
+      customerId?: string;
+      role: ContractRole;
+      roleStartDate?: string | null;
+      roleEndDate?: string | null;
+      notes?: string | null;
+    }>;
   };
 
   customer: {
@@ -455,6 +465,7 @@ export interface UpdatePlotRequest {
     contractDate?: string;
     price?: number;
     paymentStatus?: PaymentStatus;
+    customerRole?: string;
     reservationDate?: string | null;
     acceptanceNumber?: string | null;
     acceptanceDate?: string | null;
@@ -462,7 +473,15 @@ export interface UpdatePlotRequest {
     permitDate?: string | null;
     permitNumber?: string | null;
     startDate?: string | null;
+    uncollectedAmount?: number | null;
     notes?: string | null;
+    roles?: Array<{
+      customerId?: string;
+      role: ContractRole;
+      roleStartDate?: string | null;
+      roleEndDate?: string | null;
+      notes?: string | null;
+    }>;
   };
 
   customer?: {
