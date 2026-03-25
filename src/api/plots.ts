@@ -51,6 +51,16 @@ export interface PlotListItem {
     };
   }>;
 
+  // Notes
+  contractNotes: string | null;
+  customerNotes: string | null;
+
+  // Buried person names (for list display)
+  buriedPersonNames: string[];
+
+  // Agent/dealer name
+  agentName: string | null;
+
   // Billing info
   nextBillingDate: string | null;
   managementFee: string | null;
@@ -112,6 +122,7 @@ export interface PlotDetailResponse {
   startDate: string | null;
   uncollectedAmount: number;
   contractNotes: string | null;
+  agentName: string | null;
 
   // Usage fee
   usageFee: {
@@ -321,6 +332,7 @@ export interface CreatePlotRequest {
     permitNumber?: string | null;
     startDate?: string | null;
     uncollectedAmount?: number | null;
+    agentName?: string | null;
     notes?: string | null;
     roles?: Array<{
       customerId?: string;
@@ -474,6 +486,7 @@ export interface UpdatePlotRequest {
     permitNumber?: string | null;
     startDate?: string | null;
     uncollectedAmount?: number | null;
+    agentName?: string | null;
     notes?: string | null;
     roles?: Array<{
       customerId?: string;
@@ -616,6 +629,7 @@ export interface CreatePlotResponse {
   acceptanceNumber: string | null;
   permitDate: string | null;
   startDate: string | null;
+  agentName: string | null;
   notes: string | null;
   physicalPlot: {
     id: string;
