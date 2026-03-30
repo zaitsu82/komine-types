@@ -61,6 +61,9 @@ export interface PlotListItem {
   // Agent/dealer name
   agentName: string | null;
 
+  // Permit info
+  permitNumber: string | null;
+
   // Billing info
   nextBillingDate: string | null;
   managementFee: string | null;
