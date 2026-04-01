@@ -13,6 +13,7 @@ export interface CollectiveBurialListItem {
   contractPlotId: string;
   plotNumber: string;
   areaName: string;
+  contractDate: string;
   applicantName: string | null;
   applicantNameKana: string | null;
   burialCapacity: number;
