@@ -454,6 +454,38 @@ export interface CreatePlotRequest {
     notes?: string | null;
   }>;
 
+  constructionInfos?: Array<{
+    constructionType?: string | null;
+    startDate?: string | null;
+    completionDate?: string | null;
+    contractor?: string | null;
+    supervisor?: string | null;
+    progress?: string | null;
+    workItem1?: string | null;
+    workDate1?: string | null;
+    workAmount1?: number | null;
+    workStatus1?: string | null;
+    workItem2?: string | null;
+    workDate2?: string | null;
+    workAmount2?: number | null;
+    workStatus2?: string | null;
+    permitNumber?: string | null;
+    applicationDate?: string | null;
+    permitDate?: string | null;
+    permitStatus?: string | null;
+    paymentType1?: string | null;
+    paymentAmount1?: number | null;
+    paymentDate1?: string | null;
+    paymentStatus1?: string | null;
+    paymentType2?: string | null;
+    paymentAmount2?: number | null;
+    paymentScheduledDate2?: string | null;
+    paymentStatus2?: string | null;
+    scheduledEndDate?: string | null;
+    constructionContent?: string | null;
+    notes?: string | null;
+  }>;
+
   collectiveBurial?: {
     burialCapacity: number;
     validityPeriodYears: number;
@@ -606,6 +638,39 @@ export interface UpdatePlotRequest {
     posthumousName?: string | null;
     reportDate?: string | null;
     religion?: string | null;
+    notes?: string | null;
+  }>;
+
+  constructionInfos?: Array<{
+    id?: string;
+    constructionType?: string | null;
+    startDate?: string | null;
+    completionDate?: string | null;
+    contractor?: string | null;
+    supervisor?: string | null;
+    progress?: string | null;
+    workItem1?: string | null;
+    workDate1?: string | null;
+    workAmount1?: number | null;
+    workStatus1?: string | null;
+    workItem2?: string | null;
+    workDate2?: string | null;
+    workAmount2?: number | null;
+    workStatus2?: string | null;
+    permitNumber?: string | null;
+    applicationDate?: string | null;
+    permitDate?: string | null;
+    permitStatus?: string | null;
+    paymentType1?: string | null;
+    paymentAmount1?: number | null;
+    paymentDate1?: string | null;
+    paymentStatus1?: string | null;
+    paymentType2?: string | null;
+    paymentAmount2?: number | null;
+    paymentScheduledDate2?: string | null;
+    paymentStatus2?: string | null;
+    scheduledEndDate?: string | null;
+    constructionContent?: string | null;
     notes?: string | null;
   }>;
 
