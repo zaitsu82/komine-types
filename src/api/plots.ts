@@ -500,6 +500,10 @@ export interface CreatePlotRequest {
  */
 export interface UpdatePlotRequest {
   physicalPlot?: {
+    plotNumber?: string;
+    areaName?: string;
+    areaSqm?: number;
+    status?: string;
     notes?: string | null;
   };
 
