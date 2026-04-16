@@ -38,8 +38,8 @@ export const physicalPlotSchema = z.object({
     .regex(/^[A-Z0-9-]+$/, '区画番号は半角英大文字・数字・ハイフンで入力してください'),
   areaName: z
     .string()
-    .min(1, '区画（期）は必須です')
-    .max(100, '区画（期）は100文字以内で入力してください'),
+    .min(1, '区画は必須です')
+    .max(100, '区画は100文字以内で入力してください'),
   areaSqm: z.coerce
     .number()
     .positive('面積は正の数値で入力してください')
