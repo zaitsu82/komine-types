@@ -87,6 +87,20 @@ export interface PlotSearchParams extends SearchParams {
   areaName?: string;
   status?: PhysicalPlotStatus;
   paymentStatus?: PaymentStatus;
+  // 区画区分（レガシー由来 tinyint、master 化されるまでは raw 値）
+  graveKind?: number;
+  graveKubun?: number;
+  graveType?: number;
+}
+
+/**
+ * Distinct grave classification values
+ * (GET /plots/grave-classifications)
+ */
+export interface GraveClassificationsResponse {
+  graveKinds: number[];
+  graveKubuns: number[];
+  graveTypes: number[];
 }
 
 /**
