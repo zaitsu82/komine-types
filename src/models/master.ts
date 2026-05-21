@@ -3,7 +3,8 @@
  *
  * Matches: Prisma master models (CemeteryTypeMaster, PaymentMethodMaster,
  * TaxTypeMaster, CalcTypeMaster, BillingTypeMaster, RecipientTypeMaster,
- * ConstructionTypeMaster, SectionNameMaster, RelationshipMaster)
+ * ConstructionTypeMaster, SectionNameMaster, RelationshipMaster,
+ * ContractorMaster)
  * Backend formatter: src/masters/masterController.ts
  */
 
@@ -51,6 +52,15 @@ export type RecipientTypeMaster = MasterRecord;
 export type ConstructionTypeMaster = MasterRecord;
 
 /**
+ * Contractor master (工事業者): legacy t_foundlog.gyousha_cd was kept as
+ * `contractor = "legacy-gyousha-{id}"` placeholder in ConstructionInfo.
+ * Master entries surface in the construction-info form / detail and let new
+ * records pick from a known list while legacy free-text values still render
+ * via the (既存値) fallback on the UI side.
+ */
+export type ContractorMaster = MasterRecord;
+
+/**
  * Identifier for each master collection used as both URL slug
  * (`/api/v1/masters/:masterType`) and key in `AllMastersResponse`.
  */
@@ -64,6 +74,7 @@ export const MASTER_TYPES = [
   'construction-type',
   'section-name',
   'relationship',
+  'contractor',
 ] as const;
 
 export type MasterType = (typeof MASTER_TYPES)[number];
@@ -82,4 +93,5 @@ export interface AllMastersResponse {
   constructionType: ConstructionTypeMaster[];
   sectionName: SectionNameMaster[];
   relationship: RelationshipMaster[];
+  contractor: ContractorMaster[];
 }
