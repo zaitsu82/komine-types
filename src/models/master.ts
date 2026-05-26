@@ -4,7 +4,7 @@
  * Matches: Prisma master models (CemeteryTypeMaster, PaymentMethodMaster,
  * TaxTypeMaster, CalcTypeMaster, BillingTypeMaster, RecipientTypeMaster,
  * ConstructionTypeMaster, SectionNameMaster, RelationshipMaster,
- * ContractorMaster)
+ * ContractorMaster, DirectionMaster, PositionMaster)
  * Backend formatter: src/masters/masterController.ts
  */
 
@@ -61,6 +61,20 @@ export type ConstructionTypeMaster = MasterRecord;
 export type ContractorMaster = MasterRecord;
 
 /**
+ * Direction master (方角): legacy sykbnn KBNNO=2024 (東/西/南/北/北東/南東/
+ * 北西/南西). `GravestoneInfo.direction_id` keeps the legacy int code, and the
+ * master `code` is that same code as a string ("1".."8"), so resolution is
+ * `direction.find(d => d.code === String(directionId))`.
+ */
+export type DirectionMaster = MasterRecord;
+
+/**
+ * Position master (位置): legacy sykbnn KBNNO=2025 (角/端/中). Resolved against
+ * `GravestoneInfo.position_id` the same way as DirectionMaster.
+ */
+export type PositionMaster = MasterRecord;
+
+/**
  * Identifier for each master collection used as both URL slug
  * (`/api/v1/masters/:masterType`) and key in `AllMastersResponse`.
  */
@@ -75,6 +89,8 @@ export const MASTER_TYPES = [
   'section-name',
   'relationship',
   'contractor',
+  'direction',
+  'position',
 ] as const;
 
 export type MasterType = (typeof MASTER_TYPES)[number];
@@ -94,4 +110,6 @@ export interface AllMastersResponse {
   sectionName: SectionNameMaster[];
   relationship: RelationshipMaster[];
   contractor: ContractorMaster[];
+  direction: DirectionMaster[];
+  position: PositionMaster[];
 }
