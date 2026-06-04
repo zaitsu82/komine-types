@@ -82,6 +82,40 @@ export interface ListBillingsQuery {
 
 export type DeleteBillingResponse = MessageResponse;
 
+/**
+ * Billing summary query (GET /billings/summary)
+ *
+ * Same filters as ListBillingsQuery minus pagination/sort — the summary
+ * aggregates over ALL matching rows, not just the current page.
+ * Added for frontend issue #225 (per-page StatCard totals were misleading).
+ */
+export interface BillingSummaryQuery {
+  contractPlotId?: string;
+  customerId?: string;
+  category?: BillingCategory;
+  status?: BillingRecordStatus;
+  billingDateFrom?: string;
+  billingDateTo?: string;
+}
+
+/**
+ * Billing summary response (GET /billings/summary)
+ *
+ * All amounts in yen, aggregated over every billing matching the filters.
+ */
+export interface BillingSummaryResponse {
+  /** 請求総額（フィルタ一致全件の amount 合計） */
+  totalAmount: number;
+  /** 入金済額（フィルタ一致全件の paidAmount 合計） */
+  paidAmount: number;
+  /** 未入金額（totalAmount - paidAmount） */
+  unpaidAmount: number;
+  /** 延滞件数（status='overdue' の件数） */
+  overdueCount: number;
+  /** フィルタ一致の総件数 */
+  totalCount: number;
+}
+
 // ===== Payment =====
 
 export interface PaymentsListResponse {
