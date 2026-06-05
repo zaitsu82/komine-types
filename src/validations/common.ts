@@ -17,12 +17,52 @@ export const dateSchema = z
 /** YYYY-MM-DD 形式の日付（任意、空文字許可） */
 export const optionalDateSchema = dateSchema.optional().or(z.literal(''));
 
-/** YYYY年MM月 形式の年月（任意、空文字許可） */
-export const yearMonthSchema = z
-  .string()
-  .regex(/^\d{4}年\d{1,2}月$/, '年月はYYYY年MM月形式で入力してください')
-  .optional()
-  .or(z.literal(''));
+/**
+ * 年月文字列の表記揺れを 'YYYY年M月' に正規化する。
+ *
+ * レガシー移行データやUI入力には 'YYYY-MM' / 'YYYY/MM' / 'YYYYMM'(6桁) /
+ * 前ゼロ付き 'YYYY年0M月' が混在しており、厳格な regex 検証だけだと
+ * 当該フィールドに触れていない区画まで保存不能になる（#31）。
+ * 解釈できない値はそのまま返し、後段の regex 検証に委ねる。
+ * 画面表示用の正規化にも使えるよう export している。
+ */
+export function normalizeYearMonth(value: unknown): unknown {
+  if (typeof value !== 'string') return value;
+  const trimmed = value.trim();
+  if (trimmed === '') return '';
+
+  // 'YYYY年M月' / 'YYYY年MM月' → 月の前ゼロを除去して統一
+  const jp = trimmed.match(/^(\d{4})年(\d{1,2})月$/);
+  if (jp) {
+    const month = Number(jp[2]);
+    return month >= 1 && month <= 12 ? `${jp[1]}年${month}月` : trimmed;
+  }
+
+  // 'YYYY-M(M)' / 'YYYY/M(M)' / 'YYYYMM'(6桁)
+  const numeric =
+    trimmed.match(/^(\d{4})[-/](\d{1,2})$/) ?? trimmed.match(/^(\d{4})(\d{2})$/);
+  if (numeric) {
+    const month = Number(numeric[2]);
+    if (month >= 1 && month <= 12) return `${numeric[1]}年${month}月`;
+  }
+
+  return trimmed;
+}
+
+/**
+ * YYYY年MM月 形式の年月（任意、空文字許可）
+ *
+ * 検証前に normalizeYearMonth で表記揺れ（'YYYY-MM'/'YYYYMM' 等）を
+ * 吸収する（#31）。正規化できない値のみ regex エラーになる。
+ */
+export const yearMonthSchema = z.preprocess(
+  normalizeYearMonth,
+  z
+    .string()
+    .regex(/^\d{4}年\d{1,2}月$/, '年月はYYYY年MM月形式で入力してください')
+    .optional()
+    .or(z.literal('')),
+);
 
 // ===== 電話番号 =====
 

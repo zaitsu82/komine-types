@@ -8,6 +8,7 @@ import {
   dateSchema,
   optionalDateSchema,
   yearMonthSchema,
+  normalizeYearMonth,
   phoneSchema,
   requiredPhoneSchema,
   postalCodeSchema,
@@ -48,8 +49,44 @@ describe('yearMonthSchema (YYYY年MM月)', () => {
   it.each(['2026年5月', '2026年12月', ''])('accepts %s', (v) => {
     expect(yearMonthSchema.safeParse(v).success).toBe(true);
   });
-  it.each(['2026-05', '2026年5', '5月'])('rejects %s', (v) => {
+
+  // レガシー移行データ・UI入力の表記揺れは正規化して受理する（#31）
+  it.each([
+    ['2024-04', '2024年4月'],
+    ['2024/4', '2024年4月'],
+    ['202404', '2024年4月'],
+    ['2024年04月', '2024年4月'],
+    [' 2024-12 ', '2024年12月'],
+  ])('normalizes %s → %s', (input, expected) => {
+    const result = yearMonthSchema.safeParse(input);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).toBe(expected);
+    }
+  });
+
+  it.each(['2026年5', '5月', '2026-13', '202400', 'abc'])('rejects %s', (v) => {
     expect(yearMonthSchema.safeParse(v).success).toBe(false);
+  });
+});
+
+describe('normalizeYearMonth', () => {
+  it('文字列以外・空文字はそのまま', () => {
+    expect(normalizeYearMonth(null)).toBeNull();
+    expect(normalizeYearMonth(undefined)).toBeUndefined();
+    expect(normalizeYearMonth('')).toBe('');
+    expect(normalizeYearMonth(202404)).toBe(202404);
+  });
+
+  it('解釈できない文字列は trim してそのまま返す（後段 regex で弾く）', () => {
+    expect(normalizeYearMonth('不明')).toBe('不明');
+    expect(normalizeYearMonth('2024-1-1')).toBe('2024-1-1');
+  });
+
+  it('月が範囲外の場合は変換しない', () => {
+    expect(normalizeYearMonth('2024-13')).toBe('2024-13');
+    expect(normalizeYearMonth('202400')).toBe('202400');
+    expect(normalizeYearMonth('2024年13月')).toBe('2024年13月');
   });
 });
 
