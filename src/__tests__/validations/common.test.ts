@@ -127,6 +127,18 @@ describe('emailSchema / optionalEmailSchema', () => {
   it('rejects an invalid email', () => {
     expect(emailSchema.safeParse('not-an-email').success).toBe(false);
   });
+  it('rejects an email longer than 254 chars (DB VarChar(254) #36)', () => {
+    const longEmail = `${'a'.repeat(250)}@example.com`; // 262 文字
+    expect(longEmail.length).toBeGreaterThan(254);
+    expect(emailSchema.safeParse(longEmail).success).toBe(false);
+    expect(optionalEmailSchema.safeParse(longEmail).success).toBe(false);
+  });
+  it('accepts an email of exactly 254 chars', () => {
+    const local = 'a'.repeat(254 - '@example.com'.length);
+    const email = `${local}@example.com`;
+    expect(email.length).toBe(254);
+    expect(emailSchema.safeParse(email).success).toBe(true);
+  });
   it('optional accepts empty string', () => {
     expect(optionalEmailSchema.safeParse('').success).toBe(true);
   });
