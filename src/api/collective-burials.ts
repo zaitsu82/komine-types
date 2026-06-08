@@ -12,6 +12,8 @@ export interface CollectiveBurialListItem {
   id: string;
   contractPlotId: string;
   plotNumber: string;
+  /** 表示用区画番号（grave_name_cd 由来、#158）。legacy-* の plot_number に代えて画面表示に使う #283 */
+  displayNumber?: string | null;
   areaName: string;
   contractDate: string;
   applicantName: string | null;
@@ -62,6 +64,8 @@ export interface CollectiveBurialDetailResponse {
   id: string;
   contractPlotId: string;
   plotNumber: string;
+  /** 表示用区画番号（grave_name_cd 由来、#158）。legacy-* の plot_number に代えて画面表示に使う #283 */
+  displayNumber?: string | null;
   areaName: string;
   contractDate: string;
   applicant: {
@@ -141,6 +145,8 @@ export interface UpdateCollectiveBurialResponse {
   id: string;
   contractPlotId: string;
   plotNumber: string;
+  /** 表示用区画番号（grave_name_cd 由来、#158）。legacy-* の plot_number に代えて画面表示に使う #283 */
+  displayNumber?: string | null;
   burialCapacity: number;
   currentBurialCount: number;
   capacityReachedDate: string | null;
