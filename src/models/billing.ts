@@ -53,6 +53,8 @@ export interface Billing {
   legacySeikyuCd: number | null;
   customer: BillingCustomerSummary | null;
   plotNumber: string | null;
+  /** 表示用区画番号（grave_name_cd 由来、#158）。legacy-* の plot_number に代えて画面表示に使う #283 */
+  displayNumber?: string | null;
   areaName: string | null;
   createdAt: string; // ISO datetime
   updatedAt: string;
@@ -95,6 +97,8 @@ export interface Payment {
   billing: BillingSummaryForPayment | null;
   customer: BillingCustomerSummary | null;
   plotNumber: string | null;
+  /** 表示用区画番号（grave_name_cd 由来、#158）。legacy-* の plot_number に代えて画面表示に使う #283 */
+  displayNumber?: string | null;
   areaName: string | null;
   createdAt: string;
   updatedAt: string;
