@@ -358,6 +358,13 @@ export const buriedPersonSchema = z.object({
   causeOfDeath: z.string().max(200).optional().nullable(),
   chiefMournerName: z.string().max(100).optional().nullable(),
   chiefMournerRelationship: z.string().max(50).optional().nullable(),
+  // 合祀年数の個別上書き（null/未指定=区画の合祀年数を継承）
+  validityPeriodYearsOverride: z.coerce
+    .number()
+    .int()
+    .positive('合祀年数は1年以上で入力してください')
+    .optional()
+    .nullable(),
   notes: z.string().max(500).optional().nullable(),
 });
 

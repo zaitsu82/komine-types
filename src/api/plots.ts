@@ -219,6 +219,8 @@ export interface PlotDetailResponse {
     causeOfDeath: string | null;
     chiefMournerName: string | null;
     chiefMournerRelationship: string | null;
+    /** 合祀年数の個別上書き（null=区画の合祀年数を継承）。合祀予定日は契約日+解決年数で算出。 */
+    validityPeriodYearsOverride: number | null;
     notes: string | null;
   }>;
 
@@ -539,6 +541,7 @@ export interface CreatePlotRequest {
     causeOfDeath?: string | null;
     chiefMournerName?: string | null;
     chiefMournerRelationship?: string | null;
+    validityPeriodYearsOverride?: number | null;
     notes?: string | null;
   }>;
 
@@ -764,6 +767,7 @@ export interface UpdatePlotRequest {
     causeOfDeath?: string | null;
     chiefMournerName?: string | null;
     chiefMournerRelationship?: string | null;
+    validityPeriodYearsOverride?: number | null;
     notes?: string | null;
   }>;
 
