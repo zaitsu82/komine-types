@@ -106,6 +106,8 @@ export interface BuriedPerson {
   causeOfDeath: string | null;  // 死因（レガシー siin、センシティブ情報）
   chiefMournerName: string | null;  // 喪主氏名（レガシー moshu_sei + moshu_mei）
   chiefMournerRelationship: string | null;  // 喪主続柄（レガシー moshu_zokugara）
+  /** 合祀年数の個別上書き（null=区画の合祀年数を継承）。人によって短くする運用に対応（komine-docs#10 項目8）。 */
+  validityPeriodYearsOverride: number | null;
   notes: string | null;
 }
 
@@ -185,5 +187,6 @@ export interface BuriedPersonInput {
   causeOfDeath?: string | null;
   chiefMournerName?: string | null;
   chiefMournerRelationship?: string | null;
+  validityPeriodYearsOverride?: number | null;
   notes?: string | null;
 }
