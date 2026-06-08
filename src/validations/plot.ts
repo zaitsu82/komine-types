@@ -246,7 +246,7 @@ export const workInfoSchema = z.object({
     .default(''),
   workPostalCode: z
     .string()
-    .max(10, '勤務先郵便番号は10文字以内で入力してください')
+    .max(7, '勤務先郵便番号は7文字以内で入力してください')
     .optional()
     .default(''),
   workPhoneNumber: phoneSchema.or(z.literal('')).default(''),
@@ -268,7 +268,7 @@ export const usageFeeSchema = z.object({
   usageFee: z.string().max(50).optional().nullable(),
   area: z.string().max(20).optional().nullable(),
   unitPrice: z.string().max(50).optional().nullable(),
-  paymentMethod: z.string().max(50).optional().nullable(),
+  paymentMethod: z.string().max(20).optional().nullable(),
 });
 
 // ===== 管理料スキーマ =====
@@ -283,7 +283,7 @@ export const managementFeeSchema = z.object({
   managementFee: z.string().max(50).optional().nullable(),
   unitPrice: z.string().max(50).optional().nullable(),
   lastBillingMonth: yearMonthSchema.nullable(),
-  paymentMethod: z.string().max(50).optional().nullable(),
+  paymentMethod: z.string().max(20).optional().nullable(),
 });
 
 // ===== 墓石情報スキーマ =====
@@ -292,7 +292,7 @@ export const gravestoneInfoSchema = z.object({
   gravestoneBase: z.string().max(100).optional().nullable(),
   enclosurePosition: z.string().max(100).optional().nullable(),
   gravestoneDealer: z.string().max(100).optional().nullable(),
-  gravestoneType: z.string().max(100).optional().nullable(),
+  gravestoneType: z.string().max(50).optional().nullable(),
   surroundingArea: z.string().max(100).optional().nullable(),
   gravestoneCost: optionalNonnegativeNumber.optional(),
   establishmentDeadline: optionalDateSchema.nullable(),
@@ -317,7 +317,7 @@ export const familyContactSchema = z.object({
     .string()
     .min(1, '続柄は必須です')
     .max(50, '続柄は50文字以内で入力してください'),
-  postalCode: z.string().max(10).optional().nullable(),
+  postalCode: z.string().max(7).optional().nullable(),
   address: z
     .string()
     .max(200, '住所は200文字以内で入力してください')
@@ -325,18 +325,18 @@ export const familyContactSchema = z.object({
     .nullable(),
   phoneNumber: z
     .string()
-    .max(20, '電話番号は20文字以内で入力してください')
+    .max(11, '電話番号は11文字以内（数字のみ）で入力してください')
     .optional()
     .nullable(),
-  phoneNumber2: z.string().max(20).optional().nullable(),
-  faxNumber: z.string().max(20).optional().nullable(),
+  phoneNumber2: z.string().max(15).optional().nullable(),
+  faxNumber: z.string().max(11).optional().nullable(),
   email: optionalEmailSchema.nullable(),
   registeredAddress: z.string().max(200).optional().nullable(),
   mailingType: z.nativeEnum(AddressType).optional().nullable(),
   workCompanyName: z.string().max(100).optional().nullable(),
   workCompanyNameKana: z.string().max(100).optional().nullable(),
   workAddress: z.string().max(200).optional().nullable(),
-  workPhoneNumber: z.string().max(20).optional().nullable(),
+  workPhoneNumber: z.string().max(15).optional().nullable(),
   contactMethod: z.string().max(50).optional().nullable(),
   notes: z.string().max(1000).optional().nullable(),
 });
