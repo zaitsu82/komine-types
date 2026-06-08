@@ -47,6 +47,10 @@ export interface PlotListItem {
 
   // Physical plot info (flattened)
   plotNumber: string;
+  // 表示用の区画番号（レガシー grave_name_cd 由来、例: "A-100"）。
+  // plotNumber はユニークキー兼一括取込キーで legacy-{id} のままのため、
+  // 表示はこちらを優先する（未設定時は plotNumber にフォールバック）。#158
+  displayNumber: string | null;
   areaName: string;
   physicalPlotAreaSqm: number;
   physicalPlotStatus: PhysicalPlotStatus;
@@ -144,6 +148,7 @@ export interface PlotDetailResponse {
   physicalPlot: {
     id: string;
     plotNumber: string;
+    displayNumber: string | null; // 表示用区画番号（grave_name_cd 由来）#158
     areaName: string;
     areaSqm: number;
     status: PhysicalPlotStatus;
