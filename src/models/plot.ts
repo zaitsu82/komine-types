@@ -35,8 +35,6 @@ export interface ContractPlot {
   physicalPlotId: string;
   contractAreaSqm: number;
   locationDescription: string | null;
-  /** 碑文（注意書きの一言・一覧表示用）。墓誌(GravestoneInfo)とは別物。 */
-  inscription: string | null;
 
   // Sale contract info (integrated)
   contractDate: string | null;  // ISO date string（レガシー 45%空のため nullable）
@@ -233,7 +231,6 @@ export interface ContractPlotInput {
   physicalPlotId?: string;
   contractAreaSqm: number;
   locationDescription?: string | null;
-  inscription?: string | null;
   contractDate?: string | null;
   price?: number | null;
   contractStatus?: ContractStatus;

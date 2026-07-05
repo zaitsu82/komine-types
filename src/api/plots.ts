@@ -80,9 +80,6 @@ export interface PlotListItem {
   contractNotes: string | null;
   customerNotes: string | null;
 
-  // 碑文（注意書きの一言・一覧表示用）
-  inscription: string | null;
-
   // Buried person names (for list display)
   buriedPersonNames: string[];
 
@@ -175,8 +172,6 @@ export interface PlotDetailResponse {
   /** サーバ導出値: active 請求の (請求額−入金額)。手入力不可・読み取り専用（#170）。 */
   uncollectedAmount: number;
   contractNotes: string | null;
-  /** 碑文（注意書きの一言）。墓誌(gravestoneInscription)とは別物。 */
-  inscription: string | null;
   agentName: string | null;
 
   // レガシー由来の区分コード
@@ -389,7 +384,6 @@ export interface CreatePlotRequest {
   contractPlot: {
     contractAreaSqm: number;
     locationDescription?: string | null;
-    inscription?: string | null;
   };
 
   saleContract: {
@@ -613,7 +607,6 @@ export interface UpdatePlotRequest {
   contractPlot?: {
     contractAreaSqm?: number;
     locationDescription?: string | null;
-    inscription?: string | null;
   };
 
   saleContract?: {
